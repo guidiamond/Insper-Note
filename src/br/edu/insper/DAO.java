@@ -73,7 +73,32 @@ public class DAO {
 				stmt.execute();
 				stmt.close();
 	}
-	
+	public boolean autentica(String username, String pass) {
+		List<Users> pessoas = new ArrayList<Users>();
+		String sql = "SELECT * FROM User WHERE " +
+				"username=" + "\'" + username + "\'" + " AND " + "password=" + "\'" + pass + "\'";
+		PreparedStatement stmt;
+		try {
+			stmt = connection.
+					 prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				Users pessoa = new Users();
+				pessoa.setId(rs.getInt("id"));
+				pessoa.setUsername(rs.getString("username"));
+				pessoa.setPassword(rs.getString("password"));
+				pessoa.setEmail(rs.getString("email"));
+				pessoas.add(pessoa);
+			}
+			if (pessoas.size() != 0 ) {
+				return true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
 //	public void altera(Pessoas pessoa) throws SQLException {
 //		String sql = "UPDATE Pessoas SET " +
 //		 "nome=?, nascimento=?, altura=? WHERE id=?";

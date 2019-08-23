@@ -3,6 +3,7 @@ package br.edu.insper;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,8 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/cria")
-public class Cria extends HttpServlet {
+@WebServlet("/entra")
+public class Entra extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response)
@@ -22,28 +23,16 @@ public class Cria extends HttpServlet {
 			HttpServletResponse response)
 					throws ServletException, IOException {
 		DAO dao = new DAO();
-		Users user = new Users();
-		String cpass = request.getParameter("cpassword");
+		String username = request.getParameter("username");
 		String pass = request.getParameter("password");
-		if (cpass.equals(pass)) {
-			user.setUsername(request.getParameter("username"));
-			user.setPassword(pass);
-			user.setEmail(request.getParameter("email"));
-			try {
-				dao.adiciona(user);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
+		boolean autenticated = dao.autentica(username, pass);
+		if (autenticated) {
 			response.sendRedirect(request.getContextPath() + "/lista");
 			dao.close();
 		}
 		else {
 			PrintWriter out = response.getWriter();
-			out.println("<html><body>");
-			out.print(cpass);
-			out.print(pass);
+			out.println("<html><h1>erro</h1><body>");
 			out.println("<body><html>");
 		}
 
