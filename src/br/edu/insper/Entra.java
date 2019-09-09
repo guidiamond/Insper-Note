@@ -27,7 +27,7 @@ public class Entra extends HttpServlet {
 		String pass = request.getParameter("password");
 		boolean autenticated = dao.autentica(username, pass);
 		if (autenticated) {
-			response.sendRedirect(request.getContextPath() + "/lista");
+			response.sendRedirect(request.getContextPath() + "/endeavors.jsp");
 			dao.close();
 		}
 		else {
