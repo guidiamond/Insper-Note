@@ -64,23 +64,24 @@ public class DAO {
 	}
 
 		public List<Endeavors> getEndeavor() {
-			List<Endeavors> pessoas = new ArrayList<Endeavors>();
+			List<Endeavors> endeavors = new ArrayList<Endeavors>();
 			PreparedStatement stmt;
 			try {
 				stmt = connection.
 						prepareStatement("SELECT * FROM Endeavor");
 				ResultSet rs = stmt.executeQuery();
 				while (rs.next()) {
-					Endeavors pessoa = new Endeavors();
-					pessoa.setTodo(rs.getString("to_do"));
-					pessoa.setDoing(rs.getString("doing"));
-					pessoa.setDone(rs.getString("done"));
-					pessoas.add(pessoa);
+					Endeavors endeavor = new Endeavors();
+					endeavor.setId(rs.getInt("id"));
+					endeavor.setTodo(rs.getString("to_do"));
+					endeavor.setDoing(rs.getString("doing"));
+					endeavor.setDone(rs.getString("done"));
+					endeavors.add(endeavor);
 				}
 				rs.close();
 				stmt.close();
 
-				return pessoas;
+				return endeavors;
 			}
 			catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -88,7 +89,17 @@ public class DAO {
 				return null;
 			}		
 		}
-
+		public void addEndeavor(Endeavors endeavor) throws SQLException {
+			String sql = "INSERT INTO Endeavor" +
+					"(to_do, doing, done) values(?,?,?)";
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setString(1,endeavor.getTodo());
+			stmt.setString(2,endeavor.getDoing());
+			stmt.setString(3,endeavor.getDone());
+			stmt.execute();
+			stmt.close();
+		}
+		
 	public void adiciona(Users user) throws SQLException {
 		String sql = "INSERT INTO User" +
 				"(username, password, email) values(?,?,?)";
@@ -99,6 +110,7 @@ public class DAO {
 		stmt.execute();
 		stmt.close();
 	}
+	
 	public boolean autentica(String username, String pass) {
 		List<Users> pessoas = new ArrayList<Users>();
 		String sql = "SELECT * FROM User WHERE " +
@@ -125,30 +137,30 @@ public class DAO {
 		}
 		return false;
 	}
-	//	public void altera(Pessoas pessoa) throws SQLException {
-	//		String sql = "UPDATE Pessoas SET " +
-	//		 "nome=?, nascimento=?, altura=? WHERE id=?";
-	//		PreparedStatement stmt = connection.prepareStatement(sql);
-	//		stmt.setString(1, pessoa.getNome());
-	//		stmt.setDate(2, new Date(pessoa.getNascimento()
-	//		.getTimeInMillis()));
-	//		stmt.setDouble(3, pessoa.getAltura());
-	//		stmt.setInt(4, pessoa.getId());
-	//		stmt.execute();
-	//		stmt.close();
-	//	}
-	//	public void remove(Integer id) {
-	//		PreparedStatement stmt;
-	//		try {
-	//			stmt = connection
-	//			 .prepareStatement("DELETE FROM Pessoas WHERE id=?");
-	//			stmt.setLong(1, id);
-	//			stmt.execute();
-	//			stmt.close();
-	//		} catch (SQLException e) {
-	//			// TODO Auto-generated catch block
-	//			e.printStackTrace();
-	//		}
-	//		
-	//		}
+		public void altera(Endeavors endeavor) throws SQLException {
+			String sql = "UPDATE Endeavor SET " +
+			 "to_do=?, doing=?, done=? WHERE id=?";
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setString(1, endeavor.getTodo());
+			stmt.setString(2, endeavor.getDoing());
+			stmt.setString(3, endeavor.getDone());
+			stmt.setInt(4, endeavor.getId());
+			stmt.execute();
+			stmt.close();
+		}
+		
+		public void remove(Integer id) {
+			PreparedStatement stmt;
+			try {
+				stmt = connection
+				 .prepareStatement("DELETE FROM Endeavor WHERE id=?");
+				stmt.setLong(1, id);
+				stmt.execute();
+				stmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			}
 }
