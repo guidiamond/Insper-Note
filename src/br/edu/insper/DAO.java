@@ -96,9 +96,6 @@ public class DAO {
 			stmt.setString(1,endeavor.getTodo());
 			stmt.setString(2,endeavor.getDoing());
 			stmt.setString(3,endeavor.getDone());
-			System.out.println("------------");
-			System.out.println(endeavor.getTodo());
-			System.out.println("------------");
 			stmt.execute();
 			stmt.close();
 		}

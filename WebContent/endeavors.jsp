@@ -31,15 +31,16 @@
 							<span id="search_concept">Filtrar por</span> <span class="caret"></span>
 						</button>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="#alfcres">Ordem alfabética (A-Z)</a></li>
-							<li><a href="#alfdec">Ordem alfabética (Z-A)</a></li>
+							<li><a href="#todo">To do</a></li>
+							<li><a href="#doing">Doing</a></li>
+							<li><a href="#done">Done</a></li>
 							<li class="divider"></li>
 							<li><a href="#all">Tudo</a></li>
 						</ul>
 					</div>
-					<input type="hidden" name="search" value="all"
+					<input type="hidden" name="filter" value="all"
 						id="search_param"> <input type="text" class="form-control"
-						name="joa" placeholder="Busca"> <span
+						name="search" placeholder="Busca"> <span
 						class="input-group-btn">
 						<button class="btn btn-default" type="submit" >
 							<span class="glyphicon glyphicon-search"></span>
@@ -50,14 +51,72 @@
 		</div>
 	</div>
 	</form>
-	<p> <%= request.getParameter("search") %></p>
-	<p> <%= request.getParameter("joa") %></p>
-
 	<table border='1'>
 		<%
 			DAO dao = new DAO();
 			List<Endeavors> endeavors = dao.getEndeavor();
+			Map<String, List<String>> filtered_endeavors =  new HashMap<String,List<String>>();
+			List<String> todoList = new ArrayList<>();
+			List<String> doingList = new ArrayList<>();
+			List<String> doneList = new ArrayList<>();
+			filtered_endeavors.put("todo", todoList);
+			filtered_endeavors.put("doing", doingList);
+			filtered_endeavors.put("done", doneList);
 			for (Endeavors endeavor : endeavors) {
+				String search = request.getParameter("search");
+				String filter = request.getParameter("filter");
+				String todo = endeavor.getTodo();
+				String doing = endeavor.getDoing();
+				String done = endeavor.getDone();
+				if (filter != null && filter.equals("todo")) {
+					if (search != null && todo.contains(search)) {
+						todoList.add(todo);
+					}
+				}
+				else if (filter != null && filter.equals("doing")) {
+					if (search != null && todo.contains(search)) {
+						doingList.add(doing);
+					}
+				}
+				else if (filter != null && filter.equals("done")) {
+					if (search != null && todo.contains(search)) {
+						doneList.add(done);
+					}
+				}
+				else if (filter != null && filter.equals("all")) {
+						if (search == "") {
+							if (todo != null) {
+								todoList.add(todo);
+							}
+							else if (doing != null) {
+								doingList.add(doing);
+							}
+							else if (done != null) {
+								doneList.add(done);
+							}
+						}
+						
+						else {
+							if (todo != null) {
+								if (todo.contains(search)) {
+									todoList.add(todo);
+								}
+							}
+							else if (doing != null) {
+								if (doing.contains(search)) {
+									doingList.add(doing);
+								}
+							}
+							else if (done != null) {
+								if (done.contains(search)) {
+									doneList.add(done);
+								}
+							}
+						}
+						
+				}
+					
+				
 				
 		%>
 		<tr>
@@ -69,7 +128,7 @@
 		
 	</table>
 	<form action="apaga" method="post">
-			<button name="subject" type="submit" value=<%=endeavor.getId()%>>Apagar</button>
+			<button name="subject" type="submit" value=<%=endeavor.getId()%>>Apaga</button>
 	</form>
 	<form action="atualiza" method="post">
 
@@ -78,11 +137,11 @@
 		Doing:<br> <input type="text" name="doing"><br>
 		
 		Done:<br> <input type="text" name="done"><br>
-		<button name="subject" type="submit" value=<%=endeavor.getId()%>>Atualizar</button>
+		<button name="subject" type="submit" value=<%=endeavor.getId()%>>Atualiza</button>
 	</form>
-	
 	<%
 		}
+		System.out.println(filtered_endeavors);
 	%>
 	<form action="adiciona" method="post">
 		To do:<br> <input type="text" name="to_do"><br>

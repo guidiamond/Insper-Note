@@ -39,7 +39,6 @@ public class Adiciona extends HttpServlet {
 		String toDo = request.getParameter("to_do");
 		String doing = request.getParameter("doing");
 		String done = request.getParameter("done");
-		System.out.println(toDo);
 		endeavor.setTodo(toDo);
 		endeavor.setDoing(doing);
 		endeavor.setDone(done);
