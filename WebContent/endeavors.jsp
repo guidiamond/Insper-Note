@@ -70,65 +70,70 @@
 				String done = endeavor.getDone();
 				if (filter != null && filter.equals("todo")) {
 					if (search != null && todo.contains(search)) {
-						todoList.add(todo);
+						todoList.add(todo + "-" + endeavor.getId());
 					}
 				}
 				else if (filter != null && filter.equals("doing")) {
 					if (search != null && todo.contains(search)) {
-						doingList.add(doing);
+						doingList.add(doing + "-" + endeavor.getId());
 					}
 				}
 				else if (filter != null && filter.equals("done")) {
 					if (search != null && todo.contains(search)) {
-						doneList.add(done);
+						doneList.add(done + "-" + endeavor.getId());
 					}
 				}
 				else if (filter != null && filter.equals("all")) {
 						if (search == "") {
 							if (todo != null) {
-								todoList.add(todo);
+								todoList.add(todo + "-" + endeavor.getId());
 							}
 							else if (doing != null) {
-								doingList.add(doing);
+								doingList.add(doing + "-" + endeavor.getId());
 							}
 							else if (done != null) {
-								doneList.add(done);
+								doneList.add(done + "-" + endeavor.getId());
 							}
 						}
 						
 						else {
 							if (todo != null) {
 								if (todo.contains(search)) {
-									todoList.add(todo);
+									todoList.add(todo + "-" + endeavor.getId());
 								}
 							}
 							else if (doing != null) {
 								if (doing.contains(search)) {
-									doingList.add(doing);
+									doingList.add(doing + "-" + endeavor.getId());
 								}
 							}
 							else if (done != null) {
 								if (done.contains(search)) {
-									doneList.add(done);
+									doneList.add(done + "-" + endeavor.getId());
 								}
 							}
 						}
 						
 				}
-					
-				
-				
+			}
+			for (Map.Entry<String,List<String>> entry : filtered_endeavors.entrySet()) {
+
+				Iterator<String> i = entry.getValue().iterator();
+			      while (i.hasNext()) {
+						String[] elemento = i.next().split("-"); 
+						String assignment = elemento[0];
+						String id = elemento[1];
+			      
+		
 		%>
 		<tr>
-			<td><%=endeavor.getTodo()%></td>
-			<td><%=endeavor.getDoing()%></td>
-			<td><%=endeavor.getDone()%></td>
-			
+			<td><%=entry.getKey()%></td>
+			<td><%=assignment%></td>
 		</tr>
 		
 	</table>
 	<form action="apaga" method="post">
-			<button name="subject" type="submit" value=<%=endeavor.getId()%>>Apaga</button>
+		<button name="subject" type="submit" value=<%=id%>>Deleta</button>
 	</form>
 	<form action="atualiza" method="post">
 
@@ -137,9 +142,10 @@
 		Doing:<br> <input type="text" name="doing"><br>
 		
 		Done:<br> <input type="text" name="done"><br>
-		<button name="subject" type="submit" value=<%=endeavor.getId()%>>Atualiza</button>
+		<button name="subject" type="submit" value=<%=id%>>Atualiza</button>
 	</form>
 	<%
+			      }
 		}
 		System.out.println(filtered_endeavors);
 	%>
