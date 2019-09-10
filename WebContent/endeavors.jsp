@@ -6,30 +6,59 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
-<link rel="stylesheet" type="text/css" href="endeavors.css">
-
+<meta charset="ISO-8859-1">
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<link
+	href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css"
+	rel="stylesheet" id="bootstrap-css">
+<script
+	src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="teste.css">
+<script src="teste.js"></script>
 </head>
 <body>
 	<%@ page import="br.edu.insper.*, java.util.*"%>
-	<div class="container h-100">
-		<div class="d-flex justify-content-center h-100">
-			<div class="searchbar">
-				<input class="search_input" type="text" name=""
-					placeholder="Search..."> <a href="#" class="search_icon"><i
-					class="fas fa-search"></i></a>
+	
+					
+	<form id="login-form" action="endeavors.jsp" method="post" role="form">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-8 col-xs-offset-2">
+				<div class="input-group">
+					<div class="input-group-btn search-panel">
+						<button type="button" class="btn btn-default dropdown-toggle"
+							data-toggle="dropdown">
+							<span id="search_concept">Filtrar por</span> <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#alfcres">Ordem alfabética (A-Z)</a></li>
+							<li><a href="#alfdec">Ordem alfabética (Z-A)</a></li>
+							<li class="divider"></li>
+							<li><a href="#all">Tudo</a></li>
+						</ul>
+					</div>
+					<input type="hidden" name="search" value="all"
+						id="search_param"> <input type="text" class="form-control"
+						name="joa" placeholder="Busca"> <span
+						class="input-group-btn">
+						<button class="btn btn-default" type="submit" >
+							<span class="glyphicon glyphicon-search"></span>
+						</button>
+					</span>
+				</div>
 			</div>
 		</div>
 	</div>
+	</form>
+	<p> <%= request.getParameter("search") %></p>
+	<p> <%= request.getParameter("joa") %></p>
 
 	<table border='1'>
 		<%
 			DAO dao = new DAO();
 			List<Endeavors> endeavors = dao.getEndeavor();
 			for (Endeavors endeavor : endeavors) {
+				
 		%>
 		<tr>
 			<td><%=endeavor.getTodo()%></td>
@@ -40,7 +69,7 @@
 		
 	</table>
 	<form action="apaga" method="post">
-			<button name="subject" type="submit" value=<%=endeavor.getId()%>>HTML</button>
+			<button name="subject" type="submit" value=<%=endeavor.getId()%>>Apagar</button>
 	</form>
 	<form action="atualiza" method="post">
 
@@ -49,8 +78,9 @@
 		Doing:<br> <input type="text" name="doing"><br>
 		
 		Done:<br> <input type="text" name="done"><br>
-		<button name="subject" type="submit" value=<%=endeavor.getId()%>>HTML</button>
+		<button name="subject" type="submit" value=<%=endeavor.getId()%>>Atualizar</button>
 	</form>
+	
 	<%
 		}
 	%>
