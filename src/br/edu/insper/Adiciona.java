@@ -48,9 +48,10 @@ public class Adiciona extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		response.sendRedirect(request.getContextPath() + "/");
 		dao.close();
+
+		response.sendRedirect(request.getContextPath() + "/endeavors.jsp");
+
 	}
 
 }

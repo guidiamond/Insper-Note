@@ -17,7 +17,7 @@
 <script src="teste.js"></script>
 </head>
 <body>
-	<%@ page import="br.edu.insper.*, java.util.*"%>
+	<%@ page import="br.edu.insper.*, java.util.*, java.io.*"%>
 	
 					
 	<form id="login-form" action="endeavors.jsp" method="post" role="form">
@@ -62,58 +62,115 @@
 			filtered_endeavors.put("todo", todoList);
 			filtered_endeavors.put("doing", doingList);
 			filtered_endeavors.put("done", doneList);
+			String search = request.getParameter("search");
+			String filter = request.getParameter("filter");
 			for (Endeavors endeavor : endeavors) {
-				String search = request.getParameter("search");
-				String filter = request.getParameter("filter");
 				String todo = endeavor.getTodo();
 				String doing = endeavor.getDoing();
 				String done = endeavor.getDone();
 				if (filter != null && filter.equals("todo")) {
-					if (search != null && todo.contains(search)) {
-						todoList.add(todo + "-" + endeavor.getId());
-					}
-				}
-				else if (filter != null && filter.equals("doing")) {
-					if (search != null && todo.contains(search)) {
-						doingList.add(doing + "-" + endeavor.getId());
-					}
-				}
-				else if (filter != null && filter.equals("done")) {
-					if (search != null && todo.contains(search)) {
-						doneList.add(done + "-" + endeavor.getId());
-					}
-				}
-				else if (filter != null && filter.equals("all")) {
 						if (search == "") {
-							if (todo != null) {
+							System.out.println("b");
+							if (todo != null && todo.length() != 0) {
+								System.out.println(todo);
 								todoList.add(todo + "-" + endeavor.getId());
-							}
-							else if (doing != null) {
-								doingList.add(doing + "-" + endeavor.getId());
-							}
-							else if (done != null) {
-								doneList.add(done + "-" + endeavor.getId());
 							}
 						}
 						
 						else {
-							if (todo != null) {
+							System.out.println("c");
+							if (todo != null && todo.length() != 0) {
 								if (todo.contains(search)) {
 									todoList.add(todo + "-" + endeavor.getId());
 								}
 							}
-							else if (doing != null) {
+						}
+				}
+
+				else if (filter != null && filter.equals("doing")) {
+						if (search == "") {
+							System.out.println("b");
+							if (doing != null && doing.length() != 0) {
+								System.out.println(todo);
+								doingList.add(doing + "-" + endeavor.getId());
+							}
+						}
+						
+						else {
+							System.out.println("cacacacaca");
+							if (doing != null && doing.length() != 0) {
 								if (doing.contains(search)) {
 									doingList.add(doing + "-" + endeavor.getId());
 								}
 							}
-							else if (done != null) {
+						}
+				}
+				else if (filter != null && filter.equals("done")) {
+					if (search == "") {
+						System.out.println("b");
+						if (done != null && done.length() != 0) {
+							System.out.println(todo);
+							doneList.add(done + "-" + endeavor.getId());
+						}
+					}
+					
+					else {
+						System.out.println("cacacacaca");
+						if (done != null && done.length() != 0) {
+							if (done.contains(search)) {
+								doneList.add(done + "-" + endeavor.getId());
+							}
+						}
+					}
+			}
+				else if (filter != null && filter.equals("all")) {
+					System.out.println("a");
+						if (search == "") {
+							System.out.println("b");
+							if (todo != null && todo.length() != 0) {
+								System.out.println(todo);
+								todoList.add(todo + "-" + endeavor.getId());
+							}
+							else if (doing != null  && doing.length() != 0) {
+								doingList.add(doing + "-" + endeavor.getId());
+							}
+							else if (done != null  && done.length() != 0) {
+								doneList.add(done + "-" + endeavor.getId());
+						}
+						}
+						
+						else {
+							System.out.println(filter);
+							if (todo != null && todo.length() != 0) {
+								if (todo.contains(search)) {
+									todoList.add(todo + "-" + endeavor.getId());
+								}
+							}
+							else if (doing != null && doing.length() != 0) {
+								if (doing.contains(search)) {
+									doingList.add(doing + "-" + endeavor.getId());
+								}
+							}
+							else if (done != null && done.length() != 0) {
 								if (done.contains(search)) {
 									doneList.add(done + "-" + endeavor.getId());
 								}
 							}
 						}
 						
+				}
+				else {
+					System.out.println("d");
+						if (todo != null && todo.length() != 0) {
+							System.out.println(todo);
+							todoList.add(todo + "-" + endeavor.getId());
+						}
+						else if (doing != null  && doing.length() != 0) {
+							doingList.add(doing + "-" + endeavor.getId());
+						}
+						else if (done != null  && done.length() != 0) {
+							doneList.add(done + "-" + endeavor.getId());
+					}
 				}
 			}
 			for (Map.Entry<String,List<String>> entry : filtered_endeavors.entrySet()) {

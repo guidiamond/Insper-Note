@@ -54,12 +54,9 @@ public class Atualiza extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		PrintWriter out = response.getWriter();
-		out.println("<html><body>");
-		out.println("atualizado" + endeavor.getId());
-		out.println("</body></html>");
 		dao.close();
+
+		response.sendRedirect(request.getContextPath() + "/endeavors.jsp");
 	}
 
 }
