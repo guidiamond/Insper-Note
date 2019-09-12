@@ -13,7 +13,7 @@
 	rel="stylesheet" id="bootstrap-css">
 <script
 	src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-<link rel="stylesheet" type="text/css" href="teste.css">
+<link rel="stylesheet" type="text/css" href="endeavors.css">
 <script src="teste.js"></script>
 </head>
 <body>
@@ -51,8 +51,16 @@
 		</div>
 	</div>
 	</form>
+	
+<div class="container-fluid" id="testete">
+	<div class="row">
+		<div class="col-sm-4">TODO</div>
+		<div class="col-sm-4">DOING</div>
+		<div class="col-sm-4">DONE</div>
+	</div>
+	</div>
 	<table border='1'>
-		<%
+			<%
 			DAO dao = new DAO();
 			List<Endeavors> endeavors = dao.getEndeavor();
 			Map<String, List<String>> filtered_endeavors =  new HashMap<String,List<String>>();
@@ -70,153 +78,125 @@
 				String done = endeavor.getDone();
 				if (filter != null && filter.equals("todo")) {
 						if (search == "") {
-							System.out.println("b");
-							if (todo != null && todo.length() != 0) {
-								System.out.println(todo);
+						if (todo != null && todo.length() != 0) {
+							todoList.add(todo + "-" + endeavor.getId());
+						}
+					}
+
+					else {
+						if (todo != null && todo.length() != 0) {
+							if (todo.contains(search)) {
 								todoList.add(todo + "-" + endeavor.getId());
 							}
 						}
-						
-						else {
-							System.out.println("c");
-							if (todo != null && todo.length() != 0) {
-								if (todo.contains(search)) {
-									todoList.add(todo + "-" + endeavor.getId());
-								}
-							}
-						}
+					}
 				}
 
 				else if (filter != null && filter.equals("doing")) {
-						if (search == "") {
-							System.out.println("b");
-							if (doing != null && doing.length() != 0) {
-								System.out.println(todo);
+					if (search == "") {
+						if (doing != null && doing.length() != 0) {
+							doingList.add(doing + "-" + endeavor.getId());
+						}
+					}
+
+					else {
+						if (doing != null && doing.length() != 0) {
+							if (doing.contains(search)) {
 								doingList.add(doing + "-" + endeavor.getId());
 							}
 						}
-						
-						else {
-							System.out.println("cacacacaca");
-							if (doing != null && doing.length() != 0) {
-								if (doing.contains(search)) {
-									doingList.add(doing + "-" + endeavor.getId());
-								}
-							}
-						}
-				}
-				else if (filter != null && filter.equals("done")) {
+					}
+				} else if (filter != null && filter.equals("done")) {
 					if (search == "") {
-						System.out.println("b");
 						if (done != null && done.length() != 0) {
-							System.out.println(todo);
 							doneList.add(done + "-" + endeavor.getId());
 						}
 					}
-					
+
 					else {
-						System.out.println("cacacacaca");
 						if (done != null && done.length() != 0) {
 							if (done.contains(search)) {
 								doneList.add(done + "-" + endeavor.getId());
 							}
 						}
 					}
-			}
-				else if (filter != null && filter.equals("all")) {
-					System.out.println("a");
-						if (search == "") {
-							System.out.println("b");
-							if (todo != null && todo.length() != 0) {
-								System.out.println(todo);
+				} else if (filter != null && filter.equals("all")) {
+					if (search == "") {
+						if (todo != null && todo.length() != 0) {
+							todoList.add(todo + "-" + endeavor.getId());
+						} else if (doing != null && doing.length() != 0) {
+							doingList.add(doing + "-" + endeavor.getId());
+						} else if (done != null && done.length() != 0) {
+							doneList.add(done + "-" + endeavor.getId());
+						}
+					}
+
+					else {
+						if (todo != null && todo.length() != 0) {
+							if (todo.contains(search)) {
 								todoList.add(todo + "-" + endeavor.getId());
 							}
-							else if (doing != null  && doing.length() != 0) {
+						} else if (doing != null && doing.length() != 0) {
+							if (doing.contains(search)) {
 								doingList.add(doing + "-" + endeavor.getId());
 							}
-							else if (done != null  && done.length() != 0) {
+						} else if (done != null && done.length() != 0) {
+							if (done.contains(search)) {
 								doneList.add(done + "-" + endeavor.getId());
-						}
-						}
-						
-						else {
-							System.out.println(filter);
-							if (todo != null && todo.length() != 0) {
-								if (todo.contains(search)) {
-									todoList.add(todo + "-" + endeavor.getId());
-								}
-							}
-							else if (doing != null && doing.length() != 0) {
-								if (doing.contains(search)) {
-									doingList.add(doing + "-" + endeavor.getId());
-								}
-							}
-							else if (done != null && done.length() != 0) {
-								if (done.contains(search)) {
-									doneList.add(done + "-" + endeavor.getId());
-								}
 							}
 						}
-						
-				}
-				else {
-					System.out.println("d");
-						if (todo != null && todo.length() != 0) {
-							System.out.println(todo);
-							todoList.add(todo + "-" + endeavor.getId());
-						}
-						else if (doing != null  && doing.length() != 0) {
-							doingList.add(doing + "-" + endeavor.getId());
-						}
-						else if (done != null  && done.length() != 0) {
-							doneList.add(done + "-" + endeavor.getId());
+					}
+
+				} else {
+					if (todo != null && todo.length() != 0) {
+						todoList.add(todo + "-" + endeavor.getId());
+					} else if (doing != null && doing.length() != 0) {
+						doingList.add(doing + "-" + endeavor.getId());
+					} else if (done != null && done.length() != 0) {
+						doneList.add(done + "-" + endeavor.getId());
 					}
 				}
 			}
-			for (Map.Entry<String,List<String>> entry : filtered_endeavors.entrySet()) {
+			for (Map.Entry<String, List<String>> entry : filtered_endeavors.entrySet()) {
 
 				Iterator<String> i = entry.getValue().iterator();
-			      while (i.hasNext()) {
-						String[] elemento = i.next().split("-"); 
-						String assignment = elemento[0];
-						String id = elemento[1];
-			      
-		
+				while (i.hasNext()) {
+					String[] elemento = i.next().split("-");
+					String assignment = elemento[0];
+					String id = elemento[1];
 		%>
-		<tr>
-			<td><%=entry.getKey()%></td>
-			<td><%=assignment%></td>
-		</tr>
-		
-	</table>
-	<form action="apaga" method="post">
-		<button name="subject" type="submit" value=<%=id%>>Deleta</button>
-	</form>
-	<form action="atualiza" method="post">
+			<tr>
+				<td><%=entry.getKey()%></td>
+				<td><%=assignment%></td>
+				<td>
+						<form action="apaga" method="post">
+					<button name="subject" type="submit" value=<%=id%>>Deleta</button>
+				</form>
 
-		to_do:<br> <input type="text" name="to_do"><br>
+				<form action="update.jsp" method="post">
+					<button name="updated_item" type="submit" value=<%=id%>>Atualiza</button>
+				</form>
+			</td>
+			</tr>
+
+		</table>
 		
-		Doing:<br> <input type="text" name="doing"><br>
-		
-		Done:<br> <input type="text" name="done"><br>
-		<button name="subject" type="submit" value=<%=id%>>Atualiza</button>
-	</form>
-	<%
+		<%
 			      }
 		}
 		System.out.println(filtered_endeavors);
 	%>
-	<form action="adiciona" method="post">
-		To do:<br> <input type="text" name="to_do"><br>
-		<input type='submit' value='Adiciona'><br>
-	</form>
-	<form action="adiciona" method="post">
-		Doing:<br> <input type="text" name="doing"><br>
-		<input type='submit' value='Adiciona'><br>
-	</form>
-	<form action="adiciona" method="post">
-		Done:<br> <input type="text" name="done"><br>
-		<input type='submit' value='Adiciona'><br>
-	</form>
+		<form action="adiciona" method="post">
+			To do:<br> <input type="text" name="to_do"><br> <input
+				type='submit' value='Adiciona'><br>
+		</form>
+		<form action="adiciona" method="post">
+			Doing:<br> <input type="text" name="doing"><br> <input
+				type='submit' value='Adiciona'><br>
+		</form>
+		<form action="adiciona" method="post">
+			Done:<br> <input type="text" name="done"><br> <input
+				type='submit' value='Adiciona'><br>
+		</form>
 </body>
 </html>
