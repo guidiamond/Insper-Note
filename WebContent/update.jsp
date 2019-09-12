@@ -5,12 +5,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Update</title>
+
+<link rel="stylesheet" type="text/css" href="endeavors.css">
 </head>
 <body>
 
 	<%@ page import="br.edu.insper.*, java.util.*, java.io.*"%>
 	<%String updated_item = request.getParameter("updated_item"); %>
-	<form action="atualiza" method="post">
+	<h1 class="formul">Atualize o dado!</h1>
+	<form action="atualiza" method="post" class="formul">
 
 		To Do:<br> <input type="text" name="to_do"><br>
 

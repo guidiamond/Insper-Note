@@ -43,3 +43,20 @@ body {
         min-width: 500px;
     }
 }
+
+.tabela {
+	margin-top: 50px;
+	margin-left:auto; 
+	margin-right:auto;
+}
+.formul {
+	margin-top: 5px;
+	text-align: center;
+}
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 5%;
+  height: 5%;
+}

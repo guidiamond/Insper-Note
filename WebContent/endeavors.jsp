@@ -18,50 +18,49 @@
 </head>
 <body>
 	<%@ page import="br.edu.insper.*, java.util.*, java.io.*"%>
-	
-					
+
+	<img
+		src="https://logoeps.com/wp-content/uploads/2014/09/39714-linked-in-logo-of-two-letters-icon-vector-icon-vector-eps.png"
+		alt="Smiley face" height="42" width="42">
+
 	<form id="login-form" action="endeavors.jsp" method="post" role="form">
-	<div class="container">
-		<div class="row">
-			<div class="col-xs-8 col-xs-offset-2">
-				<div class="input-group">
-					<div class="input-group-btn search-panel">
-						<button type="button" class="btn btn-default dropdown-toggle"
-							data-toggle="dropdown">
-							<span id="search_concept">Filtrar por</span> <span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="#todo">To do</a></li>
-							<li><a href="#doing">Doing</a></li>
-							<li><a href="#done">Done</a></li>
-							<li class="divider"></li>
-							<li><a href="#all">Tudo</a></li>
-						</ul>
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-8 col-xs-offset-2">
+					<div class="input-group">
+						<div class="input-group-btn search-panel">
+							<button type="button" class="btn btn-default dropdown-toggle"
+								data-toggle="dropdown">
+								<span id="search_concept">Filtrar por</span> <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#todo">To do</a></li>
+								<li><a href="#doing">Doing</a></li>
+								<li><a href="#done">Done</a></li>
+								<li class="divider"></li>
+								<li><a href="#all">Tudo</a></li>
+							</ul>
+						</div>
+						<input type="hidden" name="filter" value="all" id="search_param">
+						<input type="text" class="form-control" name="search"
+							placeholder="Busca"> <span class="input-group-btn">
+							<button class="btn btn-default" type="submit">
+								<span class="glyphicon glyphicon-search"></span>
+							</button>
+						</span>
 					</div>
-					<input type="hidden" name="filter" value="all"
-						id="search_param"> <input type="text" class="form-control"
-						name="search" placeholder="Busca"> <span
-						class="input-group-btn">
-						<button class="btn btn-default" type="submit" >
-							<span class="glyphicon glyphicon-search"></span>
-						</button>
-					</span>
 				</div>
 			</div>
 		</div>
-	</div>
 	</form>
-	
-<div class="container-fluid" id="testete">
-	<div class="row">
-		<div class="col-sm-4">TODO</div>
-		<div class="col-sm-4">DOING</div>
-		<div class="col-sm-4">DONE</div>
-	</div>
-	</div>
-	<table border='1'>
-			<%
+
+
+	<table border='1' class="tabela">
+		<%
 			DAO dao = new DAO();
+		Integer contaToDo = dao.contaToDo();
+		Integer contaDoing = dao.contaDoing();
+		Integer contaDone = dao.contaDone();
 			List<Endeavors> endeavors = dao.getEndeavor();
 			Map<String, List<String>> filtered_endeavors =  new HashMap<String,List<String>>();
 			List<String> todoList = new ArrayList<>();
@@ -165,11 +164,11 @@
 					String assignment = elemento[0];
 					String id = elemento[1];
 		%>
-			<tr>
-				<td><%=entry.getKey()%></td>
-				<td><%=assignment%></td>
-				<td>
-						<form action="apaga" method="post">
+		<tr>
+			<td><%=entry.getKey()%></td>
+			<td><%=assignment%></td>
+			<td>
+				<form action="apaga" method="post">
 					<button name="subject" type="submit" value=<%=id%>>Deleta</button>
 				</form>
 
@@ -177,26 +176,36 @@
 					<button name="updated_item" type="submit" value=<%=id%>>Atualiza</button>
 				</form>
 			</td>
-			</tr>
+		</tr>
 
-		</table>
-		
+
 		<%
 			      }
 		}
-		System.out.println(filtered_endeavors);
 	%>
-		<form action="adiciona" method="post">
-			To do:<br> <input type="text" name="to_do"><br> <input
-				type='submit' value='Adiciona'><br>
-		</form>
-		<form action="adiciona" method="post">
-			Doing:<br> <input type="text" name="doing"><br> <input
-				type='submit' value='Adiciona'><br>
-		</form>
-		<form action="adiciona" method="post">
-			Done:<br> <input type="text" name="done"><br> <input
-				type='submit' value='Adiciona'><br>
-		</form>
+	</table>
+	<form action="adiciona" method="post" class="formul">
+		To do:<br> <input type="text" name="to_do"><br> <input
+			type='submit' value='Adiciona'><br>
+	</form>
+	<form action="adiciona" method="post" class="formul">
+		Doing:<br> <input type="text" name="doing"><br> <input
+			type='submit' value='Adiciona'><br>
+	</form>
+	<form action="adiciona" method="post" class="formul">
+		Done:<br> <input type="text" name="done"><br> <input
+			type='submit' value='Adiciona'><br>
+	</form>
+	
+	<table border='1' class="tabela">
+			<tr>
+			<td>Quant To DO</td>
+			<td><%=contaToDo%></td>
+			<td>Quant Doing</td>
+			<td><%=contaDoing%></td>
+			<td>Quant Doing</td>
+			<td><%=contaDone%></td>
+			</tr>
+	</table>
 </body>
 </html>
