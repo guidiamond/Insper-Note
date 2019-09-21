@@ -1,12 +1,11 @@
-package br.edu.insper;
+package mvc.model;
 
 public class Endeavors {
 	private Integer id;
 	private String todo;
 	private String doing;
 	private String done;
-	private Integer endeavor_user;
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -31,10 +30,5 @@ public class Endeavors {
 	public void setDone(String done) {
 		this.done = done;
 	}
-//	public String getEndeavor_user() {
-//		return endeavor_user;
-//	}
-//	public void setEndeavor_user(String endeavor_user) {
-//		this.endeavor_user = endeavor_user;
-//	}
+
 }

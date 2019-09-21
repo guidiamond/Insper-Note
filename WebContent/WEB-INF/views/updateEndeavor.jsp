@@ -10,10 +10,10 @@
 </head>
 <body>
 
-	<%@ page import="br.edu.insper.*, java.util.*, java.io.*"%>
+	<%@ page import="java.util.*, java.io.*"%>
 	<%String updated_item = request.getParameter("updated_item"); %>
 	<h1 class="formul">Atualize o dado!</h1>
-	<form action="atualiza" method="post" class="formul">
+	<form action="updateEndeavor" method="post" class="formul">
 
 		To Do:<br> <input type="text" name="to_do"><br>
 

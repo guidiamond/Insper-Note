@@ -1,4 +1,5 @@
-package br.edu.insper;
+package mvc.model;
+
 
 public class Users {
 	

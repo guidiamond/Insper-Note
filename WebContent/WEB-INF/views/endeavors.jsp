@@ -13,11 +13,11 @@
 	rel="stylesheet" id="bootstrap-css">
 <script
 	src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-<link rel="stylesheet" type="text/css" href="endeavors.css">
-<script src="teste.js"></script>
+<link rel="stylesheet" type="text/css" href="css/endeavors.css">
+<script src="js/endeavors.js"></script>
 </head>
 <body>
-	<%@ page import="br.edu.insper.*, java.util.*, java.io.*"%>
+	<%@ page import="mvc.model.*, java.util.*, java.io.*"%>
 
 	<img
 		src="https://logoeps.com/wp-content/uploads/2014/09/39714-linked-in-logo-of-two-letters-icon-vector-icon-vector-eps.png"
@@ -57,11 +57,11 @@
 
 	<table border='1' class="tabela">
 		<%
-			DAO dao = new DAO();
+		EndeavorsDAO dao = new EndeavorsDAO();
 		Integer contaToDo = dao.contaToDo();
 		Integer contaDoing = dao.contaDoing();
 		Integer contaDone = dao.contaDone();
-			List<Endeavors> endeavors = dao.getEndeavor();
+		List<Endeavors> endeavors = dao.getEndeavor();
 			Map<String, List<String>> filtered_endeavors =  new HashMap<String,List<String>>();
 			List<String> todoList = new ArrayList<>();
 			List<String> doingList = new ArrayList<>();
@@ -71,6 +71,8 @@
 			filtered_endeavors.put("done", doneList);
 			String search = request.getParameter("search");
 			String filter = request.getParameter("filter");
+			System.out.println(search);
+			System.out.println(filter);
 			for (Endeavors endeavor : endeavors) {
 				String todo = endeavor.getTodo();
 				String doing = endeavor.getDoing();
@@ -168,11 +170,11 @@
 			<td><%=entry.getKey()%></td>
 			<td><%=assignment%></td>
 			<td>
-				<form action="apaga" method="post">
+				<form action="removeEndeavor" method="post">
 					<button name="subject" type="submit" value=<%=id%>>Deleta</button>
 				</form>
 
-				<form action="update.jsp" method="post">
+				<form action="updatePage" method="post">
 					<button name="updated_item" type="submit" value=<%=id%>>Atualiza</button>
 				</form>
 			</td>
@@ -184,28 +186,28 @@
 		}
 	%>
 	</table>
-	<form action="adiciona" method="post" class="formul">
+	<form action="addEndeavor" method="post" class="formul">
 		To do:<br> <input type="text" name="to_do"><br> <input
 			type='submit' value='Adiciona'><br>
 	</form>
-	<form action="adiciona" method="post" class="formul">
+	<form action="addEndeavor" method="post" class="formul">
 		Doing:<br> <input type="text" name="doing"><br> <input
 			type='submit' value='Adiciona'><br>
 	</form>
-	<form action="adiciona" method="post" class="formul">
+	<form action="addEndeavor" method="post" class="formul">
 		Done:<br> <input type="text" name="done"><br> <input
 			type='submit' value='Adiciona'><br>
 	</form>
-	
+
 	<table border='1' class="tabela">
-			<tr>
+		<tr>
 			<td>Quant To DO</td>
 			<td><%=contaToDo%></td>
 			<td>Quant Doing</td>
 			<td><%=contaDoing%></td>
 			<td>Quant Doing</td>
 			<td><%=contaDone%></td>
-			</tr>
+		</tr>
 	</table>
 </body>
 </html>

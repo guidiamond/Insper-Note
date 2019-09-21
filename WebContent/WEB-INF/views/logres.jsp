@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,8 +7,8 @@
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="index.css">
-	<script src="index.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/logres.css">
+	<script src="js/logres.js"></script>
 	<meta charset="UTF-8">
 
 	<!------ Include the above in your HEAD tag ---------->
@@ -32,7 +34,7 @@
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-lg-12">
-								<form id="login-form" action="entra" method="post" role="form" style="display: block;">
+								<form id="login-form" action="efetuaLogin" method="post" role="form" style="display: block;">
 									<div class="form-group">
 										<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Nome de usuário" value="">
 									</div>
@@ -47,7 +49,7 @@
 										</div>
 									</div>
 								</form>
-								<form id="register-form"  action="cria" method="post" role="form" style="display: none;">
+								<form id="register-form"  action="efetuaRegistro" method="post" role="form" style="display: none;">
 									<div class="form-group">
 										<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Nome de Usuário" value="">
 									</div>
