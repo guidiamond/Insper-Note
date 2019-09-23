@@ -6,7 +6,11 @@
 <meta charset="UTF-8">
 <title>Update</title>
 
-<link rel="stylesheet" type="text/css" href="endeavors.css">
+<style type="text/css">
+  <%@include file="endeavors.css" %>
+</style>
+<script><%@include file="endeavors.js" %></script>
+
 </head>
 <body>
 

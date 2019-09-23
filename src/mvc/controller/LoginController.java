@@ -18,17 +18,22 @@ public class LoginController{
 	}
 	@RequestMapping("efetuaLogin")
 	public String efetuaLogin(Users users, HttpSession session) {
+		System.out.println("dasdas");
 		if(new UserDAO().autentica(users)) {
 			session.setAttribute("usuarioLogado", users.getUsername());
-			return "redirect:endeavors";
+			return "endeavors";
 		}
-		return "redirect:logres";
+		else {
+			session.setAttribute("usuarioLogado", null);
+			return "redirect:logres";
+		}
 	}
 
 	@RequestMapping("efetuaRegistro")
 	public String efetuaRegistro(@RequestParam String username,
 			@RequestParam String email, @RequestParam String password,
 			@RequestParam String cpassword, HttpSession session) {
+		System.out.println("registrando");
 		UserDAO dao = new UserDAO();
 		Users user = new Users();
 		if (cpassword .equals(password)) {

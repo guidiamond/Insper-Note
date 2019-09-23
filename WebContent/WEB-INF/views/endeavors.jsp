@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Endeavors</title>
 <meta charset="ISO-8859-1">
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <link
@@ -13,8 +13,12 @@
 	rel="stylesheet" id="bootstrap-css">
 <script
 	src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-<link rel="stylesheet" type="text/css" href="css/endeavors.css">
-<script src="js/endeavors.js"></script>
+	
+<style type="text/css">
+  <%@include file="endeavors.css" %>
+</style>
+<script><%@include file="endeavors.js" %></script>
+	
 </head>
 <body>
 	<%@ page import="mvc.model.*, java.util.*, java.io.*"%>
@@ -23,7 +27,7 @@
 		src="https://logoeps.com/wp-content/uploads/2014/09/39714-linked-in-logo-of-two-letters-icon-vector-icon-vector-eps.png"
 		alt="Smiley face" height="42" width="42">
 
-	<form id="login-form" action="endeavors.jsp" method="post" role="form">
+	<form id="login-form" action="endeavors" method="post" role="form">
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-8 col-xs-offset-2">
@@ -62,93 +66,65 @@
 		Integer contaDoing = dao.contaDoing();
 		Integer contaDone = dao.contaDone();
 		List<Endeavors> endeavors = dao.getEndeavor();
-			Map<String, List<String>> filtered_endeavors =  new HashMap<String,List<String>>();
-			List<String> todoList = new ArrayList<>();
-			List<String> doingList = new ArrayList<>();
-			List<String> doneList = new ArrayList<>();
-			filtered_endeavors.put("todo", todoList);
-			filtered_endeavors.put("doing", doingList);
-			filtered_endeavors.put("done", doneList);
-			String search = request.getParameter("search");
-			String filter = request.getParameter("filter");
-			System.out.println(search);
-			System.out.println(filter);
-			for (Endeavors endeavor : endeavors) {
-				String todo = endeavor.getTodo();
-				String doing = endeavor.getDoing();
-				String done = endeavor.getDone();
-				if (filter != null && filter.equals("todo")) {
-						if (search == "") {
-						if (todo != null && todo.length() != 0) {
-							todoList.add(todo + "-" + endeavor.getId());
-						}
-					}
-
-					else {
-						if (todo != null && todo.length() != 0) {
-							if (todo.contains(search)) {
-								todoList.add(todo + "-" + endeavor.getId());
-							}
-						}
+		Map<String, List<String>> filtered_endeavors =  new HashMap<String,List<String>>();
+		List<String> todoList = new ArrayList<>();
+		List<String> doingList = new ArrayList<>();
+		List<String> doneList = new ArrayList<>();
+		filtered_endeavors.put("todo", todoList);
+		filtered_endeavors.put("doing", doingList);
+		filtered_endeavors.put("done", doneList);
+		String search = request.getParameter("search");
+		String filter = request.getParameter("filter");
+		for (Endeavors endeavor : endeavors) {
+			String todo = endeavor.getTodo();
+			String doing = endeavor.getDoing();
+			String done = endeavor.getDone();
+			if (filter != null && filter.equals("todo")) {
+					if (search == "") {
+					if (todo != null && todo.length() != 0) {
+						todoList.add(todo + "-" + endeavor.getId());
 					}
 				}
 
-				else if (filter != null && filter.equals("doing")) {
-					if (search == "") {
-						if (doing != null && doing.length() != 0) {
-							doingList.add(doing + "-" + endeavor.getId());
-						}
-					}
-
-					else {
-						if (doing != null && doing.length() != 0) {
-							if (doing.contains(search)) {
-								doingList.add(doing + "-" + endeavor.getId());
-							}
-						}
-					}
-				} else if (filter != null && filter.equals("done")) {
-					if (search == "") {
-						if (done != null && done.length() != 0) {
-							doneList.add(done + "-" + endeavor.getId());
-						}
-					}
-
-					else {
-						if (done != null && done.length() != 0) {
-							if (done.contains(search)) {
-								doneList.add(done + "-" + endeavor.getId());
-							}
-						}
-					}
-				} else if (filter != null && filter.equals("all")) {
-					if (search == "") {
-						if (todo != null && todo.length() != 0) {
+				else {
+					if (todo != null && todo.length() != 0) {
+						if (todo.contains(search)) {
 							todoList.add(todo + "-" + endeavor.getId());
-						} else if (doing != null && doing.length() != 0) {
+						}
+					}
+				}
+			}
+
+			else if (filter != null && filter.equals("doing")) {
+				if (search == "") {
+					if (doing != null && doing.length() != 0) {
+						doingList.add(doing + "-" + endeavor.getId());
+					}
+				}
+
+				else {
+					if (doing != null && doing.length() != 0) {
+						if (doing.contains(search)) {
 							doingList.add(doing + "-" + endeavor.getId());
-						} else if (done != null && done.length() != 0) {
+						}
+					}
+				}
+			} else if (filter != null && filter.equals("done")) {
+				if (search == "") {
+					if (done != null && done.length() != 0) {
+						doneList.add(done + "-" + endeavor.getId());
+					}
+				}
+
+				else {
+					if (done != null && done.length() != 0) {
+						if (done.contains(search)) {
 							doneList.add(done + "-" + endeavor.getId());
 						}
 					}
-
-					else {
-						if (todo != null && todo.length() != 0) {
-							if (todo.contains(search)) {
-								todoList.add(todo + "-" + endeavor.getId());
-							}
-						} else if (doing != null && doing.length() != 0) {
-							if (doing.contains(search)) {
-								doingList.add(doing + "-" + endeavor.getId());
-							}
-						} else if (done != null && done.length() != 0) {
-							if (done.contains(search)) {
-								doneList.add(done + "-" + endeavor.getId());
-							}
-						}
-					}
-
-				} else {
+				}
+			} else if (filter != null && filter.equals("all")) {
+				if (search == "") {
 					if (todo != null && todo.length() != 0) {
 						todoList.add(todo + "-" + endeavor.getId());
 					} else if (doing != null && doing.length() != 0) {
@@ -157,14 +133,40 @@
 						doneList.add(done + "-" + endeavor.getId());
 					}
 				}
-			}
-			for (Map.Entry<String, List<String>> entry : filtered_endeavors.entrySet()) {
 
-				Iterator<String> i = entry.getValue().iterator();
-				while (i.hasNext()) {
-					String[] elemento = i.next().split("-");
-					String assignment = elemento[0];
-					String id = elemento[1];
+				else {
+					if (todo != null && todo.length() != 0) {
+						if (todo.contains(search)) {
+							todoList.add(todo + "-" + endeavor.getId());
+						}
+					} else if (doing != null && doing.length() != 0) {
+						if (doing.contains(search)) {
+							doingList.add(doing + "-" + endeavor.getId());
+						}
+					} else if (done != null && done.length() != 0) {
+						if (done.contains(search)) {
+							doneList.add(done + "-" + endeavor.getId());
+						}
+					}
+				}
+
+			} else {
+				if (todo != null && todo.length() != 0) {
+					todoList.add(todo + "-" + endeavor.getId());
+				} else if (doing != null && doing.length() != 0) {
+					doingList.add(doing + "-" + endeavor.getId());
+				} else if (done != null && done.length() != 0) {
+					doneList.add(done + "-" + endeavor.getId());
+				}
+			}
+		}
+		for (Map.Entry<String, List<String>> entry : filtered_endeavors.entrySet()) {
+
+			Iterator<String> i = entry.getValue().iterator();
+			while (i.hasNext()) {
+				String[] elemento = i.next().split("-");
+				String assignment = elemento[0];
+				String id = elemento[1];
 		%>
 		<tr>
 			<td><%=entry.getKey()%></td>

@@ -15,7 +15,11 @@ public class EndeavorsDAO {
 	public EndeavorsDAO() {
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
-			connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/insper_note?user=root&password=batata");
+			String url = System.getenv("mysql_url");
+			String user = System.getenv("mysql_user");
+			String password = System.getenv("mysql_password");
+			connection = DriverManager.getConnection(url + user + password);
+//			connection = DriverManager.getConnection(conectionString);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
