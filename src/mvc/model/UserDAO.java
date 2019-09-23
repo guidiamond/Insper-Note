@@ -13,11 +13,11 @@ public class UserDAO {
 
 	public UserDAO() {
 		try {
-			Class.forName("org.mariadb.jdbc.Driver");
+			Class.forName("com.mysql.jdbc.Driver");
 			String url = System.getenv("mysql_url");
 			String user = System.getenv("mysql_user");
 			String password = System.getenv("mysql_password");
-			connection = DriverManager.getConnection(url + user + password);
+			connection = DriverManager.getConnection(url, user, password);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
