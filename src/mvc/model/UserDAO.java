@@ -11,23 +11,13 @@ import java.util.List;
 public class UserDAO {
 	private Connection connection = null;
 
-	public UserDAO() {
-		try {
+	public UserDAO() throws SQLException, ClassNotFoundException {
 			Class.forName("com.mysql.jdbc.Driver");
-			String url = System.getenv("mysql_url");
-			String user = System.getenv("mysql_user");
-			String password = System.getenv("mysql_password");
+			String url = "jdbc:mysql://localhost/insper_note";
+			String user = "root";
+			String password = "batata";
+
 			connection = DriverManager.getConnection(url, user, password);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.print(e);
-		}
-		catch (ClassNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-			System.out.print(e1);
-		}
 	}
 
 	public void close() {

@@ -20,16 +20,18 @@ public class EndeavorController {
 	public String adiciona(@RequestParam(required = false) String to_do, @RequestParam(required = false) String doing, 
 			@RequestParam(required = false) String done, HttpSession session) {
 		// TODO Auto-generated method stub
-		EndeavorsDAO dao = new EndeavorsDAO();
-		Endeavors endeavor = new Endeavors();
-		endeavor.setTodo(to_do);
-		endeavor.setDoing(doing);
-		endeavor.setDone(done);
+		EndeavorsDAO dao;
 		try {
+			dao = new EndeavorsDAO();
+			Endeavors endeavor = new Endeavors();
+			endeavor.setTodo(to_do);
+			endeavor.setDoing(doing);
+			endeavor.setDone(done);
 			dao.addEndeavor(endeavor);
-		} catch (SQLException e) {
+			
+		} catch (ClassNotFoundException | SQLException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
 		}
 		return "endeavors";
 	}
@@ -42,18 +44,20 @@ public class EndeavorController {
 	public String atualiza(@RequestParam String to_do, @RequestParam String doing,
 			@RequestParam String done, @RequestParam String subject,
 			HttpSession session) {
-		EndeavorsDAO dao = new EndeavorsDAO();
-		Endeavors endeavor = new Endeavors();
-		endeavor.setId(Integer.valueOf(subject));
-		endeavor.setTodo(to_do);
-		endeavor.setDoing(doing);
-		endeavor.setDone(done);
+		EndeavorsDAO dao;
 		try {
+			dao = new EndeavorsDAO();
+			Endeavors endeavor = new Endeavors();
+			endeavor.setId(Integer.valueOf(subject));
+			endeavor.setTodo(to_do);
+			endeavor.setDoing(doing);
+			endeavor.setDone(done);
 			dao.altera(endeavor);
-		} catch (SQLException e) {
+		} catch (ClassNotFoundException | SQLException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
 		}
+
 		return "redirect:endeavors";
 	}
 	@RequestMapping("removeEndeavor")
@@ -62,6 +66,12 @@ public class EndeavorController {
 			EndeavorsDAO dao = new EndeavorsDAO();
 			dao.remove(Integer.valueOf(subject));
 		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

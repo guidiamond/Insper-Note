@@ -19,14 +19,23 @@ public class LoginController{
 	@RequestMapping("efetuaLogin")
 	public String efetuaLogin(Users users, HttpSession session) {
 		System.out.println("dasdas");
-		if(new UserDAO().autentica(users)) {
-			session.setAttribute("usuarioLogado", users.getUsername());
-			return "endeavors";
+		try {
+			if(new UserDAO().autentica(users)) {
+				session.setAttribute("usuarioLogado", users.getUsername());
+				return "endeavors";
+			}
+			else {
+				session.setAttribute("usuarioLogado", null);
+				return "redirect:logres";
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		else {
-			session.setAttribute("usuarioLogado", null);
-			return "redirect:logres";
-		}
+		return "redirect:logres";
 	}
 
 	@RequestMapping("efetuaRegistro")
@@ -34,21 +43,25 @@ public class LoginController{
 			@RequestParam String email, @RequestParam String password,
 			@RequestParam String cpassword, HttpSession session) {
 		System.out.println("registrando");
-		UserDAO dao = new UserDAO();
-		Users user = new Users();
-		if (cpassword .equals(password)) {
-			user.setUsername(username);
-			user.setPassword(password);
-			user.setEmail(email);
-			try {
-				dao.adiciona(user);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		UserDAO dao;
+		try {
+			dao = new UserDAO();
+			Users user = new Users();
+			if (cpassword .equals(password)) {
+				user.setUsername(username);
+				user.setPassword(password);
+				user.setEmail(email);
+					dao.adiciona(user);
+					// TODO Auto-generated catch block
+				
 
-			dao.close();
+				dao.close();
+			}
+		} catch (ClassNotFoundException | SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
+
 		return "redirect:logres";
 	}
 
