@@ -13,10 +13,9 @@ public class UserDAO {
 
 	public UserDAO() throws SQLException, ClassNotFoundException {
 			Class.forName("com.mysql.jdbc.Driver");
-			String url = "jdbc:mysql://localhost/insper_note";
-			String user = "root";
-			String password = "batata";
-
+			String url = System.getenv("mysql_url");
+			String user = System.getenv("mysql_user");
+			String password = System.getenv("mysql_password");
 			connection = DriverManager.getConnection(url, user, password);
 	}
 
